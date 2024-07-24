@@ -2,7 +2,9 @@ import { Outlet } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/Dashboard';
 import { BigSidebar,Logo,Navbar, SmallSidebar } from '../components';
 
-import { useState } from 'react';
+import { createContext,useCallback,useContext,useState } from 'react';
+
+const DashboardContext = createContext();
 const DashboardLayout = () => {
   // temp
 
@@ -13,17 +15,25 @@ const DashboardLayout = () => {
   const toggleDarkTheme = () => {
     console.log('toggle dark theme');
   };
-
+  
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   }
 
-  const logoutuser = async = () => {
+  const logoutuser = async  () => {
     console.log('logout user');
   };
 
   return (
-    <Wrapper>
+    <DashboardContext.Provider value = {{
+      user,
+      showSidebar,
+      isDarkTheme,
+      toggleDarkTheme,
+      toggleSidebar,
+      logoutuser,
+    }}
+    >
       <main className='dashboard'>
         <SmallSidebar/>
         <BigSidebar/>
@@ -34,8 +44,11 @@ const DashboardLayout = () => {
           </div>
         </div>
       </main>
-    </Wrapper>
+    </DashboardContext.Provider>
   );
 };
 
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const useDashboardContext = () => useContext(DashboardContext);
 export default DashboardLayout
