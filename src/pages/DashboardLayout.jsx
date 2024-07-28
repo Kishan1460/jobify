@@ -5,15 +5,19 @@ import { BigSidebar,Logo,Navbar, SmallSidebar } from '../components';
 import { createContext,useCallback,useContext,useState } from 'react';
 
 const DashboardContext = createContext();
-const DashboardLayout = () => {
+
+const DashboardLayout = ({ isDarkThemeEnabled }) => {
   // temp
 
   const user = {name: 'kishan'}
   const [showSidebar, setShowSidebar] = useState(false);
-  const[isDarkTheme, setIsDarkTheme] = useState(false);
+  const[isDarkTheme, setIsDarkTheme] = useState(isDarkThemeEnabled);
 
   const toggleDarkTheme = () => {
-    console.log('toggle dark theme');
+    const newDarkTheme = !isDarkTheme;
+    setIsDarkTheme(newDarkTheme);
+    document.body.classList.toggle('dark-theme',newDarkTheme);
+    localStorage.setItem('darkTheme',newDarkTheme);
   };
   
   const toggleSidebar = () => {
@@ -34,6 +38,7 @@ const DashboardLayout = () => {
       logoutuser,
     }}
     >
+    <Wrapper>
       <main className='dashboard'>
         <SmallSidebar/>
         <BigSidebar/>
@@ -44,6 +49,7 @@ const DashboardLayout = () => {
           </div>
         </div>
       </main>
+    </Wrapper>
     </DashboardContext.Provider>
   );
 };
