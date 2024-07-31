@@ -6,6 +6,7 @@ import { createContext,useCallback,useContext,useState } from 'react';
 
 const DashboardContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 const DashboardLayout = ({ isDarkThemeEnabled }) => {
   // temp
 
